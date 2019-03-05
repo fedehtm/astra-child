@@ -221,4 +221,10 @@ function css_yith_search_box(){
 <?php 
 };
 
+add_action( 'wp_print_styles', 'cf7_deregister_styles', 100 );
+function cf7_deregister_styles() {
+    if ( ! is_page( 'contacto' ) ) {
+        wp_deregister_style( 'contact-form-7' );
+    }
+}
 ?>
