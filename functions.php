@@ -11,4 +11,10 @@ function my_theme_enqueue_styles() {
  );
 }
 add_action( 'wp_enqueue_scripts', 'my_theme_enqueue_styles' );
+
+function disable_yoast_schema_data($data){
+	$data = array();
+	return $data;
+}
+add_filter('wpseo_json_ld_output', 'disable_yoast_schema_data', 10, 1);
 ?>
