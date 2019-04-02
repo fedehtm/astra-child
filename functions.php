@@ -467,4 +467,6 @@ global $product;
 	echo $product->get_name();
 }
 add_shortcode( 'sc_schema_product', 'schema_product' );
+
+remove_action( 'woocommerce_before_shop_loop', 'woocommerce_catalog_ordering', 30 );
 ?>
