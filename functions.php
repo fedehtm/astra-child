@@ -434,7 +434,7 @@ add_action('wp_head', 'css_home');
 function css_home(){
 	if(is_front_page()) {  ?>
 		<style>
-		.home_ocutar {
+		.home_ocultar {
 			display: none
 		}
 		
