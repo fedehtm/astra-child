@@ -449,4 +449,16 @@ function css_home(){
 		</style>
 <?php }
 };
+
+add_action('wp_head', 'css_veracruz');
+function css_veracruz(){
+	  ?>
+	<style>
+	.main-header-bar {
+		background: #3A6541;
+		box-shadow: 0px 2px 2px #b8b8b8;
+	}
+	</style>
+<?php
+};
 ?>
