@@ -429,4 +429,24 @@ function quitar_intervalo( $price, $product ) {
 }
 add_filter( 'woocommerce_variable_sale_price_html', 'quitar_intervalo', 10, 2 );
 add_filter( 'woocommerce_variable_price_html', 'quitar_intervalo', 10, 2 );
+
+add_action('wp_head', 'css_home');
+function css_home(){
+	if(is_front_page()) {  ?>
+		<style>
+		.home_ocutar {
+			display: none
+		}
+		
+		.home_title_ocultar {
+			display: none
+		}
+		
+		.main-header-bar {
+			background: #3A6541;
+			box-shadow: 0px 3px 3px #b8b8b8;
+		}
+		</style>
+<?php }
+};
 ?>
