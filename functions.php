@@ -179,4 +179,274 @@ if (is_singular('product')) {  ?>
 <?php  }
 };
 
+add_filter( 'get_product_search_form' , 'me_custom_product_searchform' );
+function me_custom_product_searchform() {
+echo do_shortcode('[yith_woocommerce_ajax_search]');
+}
+
+add_action('wp_head', 'css_yith_search_box');
+function css_yith_search_box(){
+  ?>
+		<style>
+		#yith-s {
+	  		background-color: white; 
+		}
+
+		.autocomplete-suggestions {
+			color: black;
+			padding-top: 10px;
+			padding-bottom: 10px;
+			background: #fff;
+			border: 1px solid #ccc;
+			-moz-border-radius: 3px;
+			-webkit-border-radius: 3px;
+			border-radius: 3px;
+			-moz-box-sizing: border-box;
+			box-sizing: border-box;
+			position: relative;
+		}
+		.autocomplete-suggestion {
+			background: #fff;
+			padding-left: 15px;
+			cursor: pointer;
+			text-align: left;
+			line-height: 25px;
+			font-size: 12px;
+		}
+
+		.autocomplete-suggestion:hover {
+			background-color: #efefef;
+		}
+		</style>
+<?php 
+};
+
+add_action( 'wp_print_styles', 'cf7_deregister_styles', 100 );
+function cf7_deregister_styles() {
+    if ( ! is_page( 'contacto' ) ) {
+        wp_deregister_style( 'contact-form-7' );
+    }
+}
+
+add_action( 'wp_print_scripts', 'cf7_deregister_javascript', 100 );
+function cf7_deregister_javascript() {
+    if ( ! is_page( 'contacto' ) ) {
+        wp_deregister_script( 'contact-form-7' );
+    }
+}
+
+add_action('wp_head', 'css_lista_precios');
+function css_lista_precios(){
+if(is_page('lista-de-precios')) {  ?>
+		<style>
+		table {
+			width: 100%;
+			max-width: 100%;
+			border: 1px solid #d5d5d2;
+			border-collapse: collapse
+		}
+
+		table caption {
+			font-family: 'Tungsten A', 'Tungsten B', 'Arial Narrow', Arial, sans-serif;
+			font-weight: 400;
+			font-style: normal;
+			font-size: 2.954rem;
+			line-height: 1;
+			margin-bottom: .75em
+		}
+
+		table th {
+			font-family: 'Gotham SSm A', 'Gotham SSm B', Verdana, sans-serif;
+			font-weight: 400;
+			font-style: normal;
+			text-transform: uppercase;
+			letter-spacing: .02em;
+			font-size: .9353rem;
+			padding: 1.2307em 1.0833em 1.0833em;
+			line-height: 1.333;
+			background-color: #eae9e6
+		}
+
+		table td, table th {
+			text-align: left
+		}
+
+		table td {
+			padding: .92307em 1em .7692em
+		}
+
+		table tbody tr:nth-of-type(even) {
+			background-color: #f9f8f5
+		}
+
+		table tbody th {
+			border-top: 1px solid #d5d5d2
+		}
+
+		table tbody td {
+			border-top: 1px solid #d5d5d2
+		}
+
+		table.wdn_responsive_table thead th abbr {
+			border-bottom: none
+		}
+
+		@media screen and (max-width:47.99em) {
+			table.wdn_responsive_table td, table.wdn_responsive_table th {
+				display: block
+			}
+
+			table.wdn_responsive_table thead tr {
+				display: none
+			}
+
+			table.wdn_responsive_table tbody tr:first-child th {
+				border-top-width: 0
+			}
+
+			table.wdn_responsive_table tbody tr:nth-of-type(even) {
+				background-color: transparent
+			}
+
+			table.wdn_responsive_table tbody td {
+				text-align: left
+			}
+
+			table.wdn_responsive_table tbody td:before {
+				display: block;
+				font-weight: 700;
+				content: attr(data-header)
+			}
+
+			table.wdn_responsive_table tbody td:empty {
+				display: none
+			}
+
+			table.wdn_responsive_table tbody td:nth-of-type(even) {
+				background-color: #f9f8f5
+			}
+		}
+
+		@media (min-width:48em) {
+			table caption {
+				font-size: 2.532rem
+			}
+
+			table th {
+				padding: 1.2307em 1.2307em 1em;
+				font-size: .802rem
+			}
+
+			table td {
+				padding: .75em 1em .602em
+			}
+		}
+
+		@media screen and (min-width:48em) {
+			table.wdn_responsive_table thead th:not(:first-child) {
+				text-align: center
+			}
+
+			table.wdn_responsive_table tbody td {
+				text-align: center
+			}
+
+			table.wdn_responsive_table.flush-left td, table.wdn_responsive_table.flush-left thead th {
+				text-align: left
+			}
+		}
+		</style>
+<?php }
+};
+
+add_action('wp_head', 'css_contacto');
+function css_contacto(){
+if(is_page('contacto')) {  ?>
+		<style>
+		* {
+		  box-sizing: border-box;
+		}
+
+		/* Style inputs */
+		input[type=text], select, textarea {
+		  width: 100%;
+		  padding: 12px;
+		  border: 1px solid #ccc;
+		  margin-top: 6px;
+		  margin-bottom: 16px;
+		  resize: vertical;
+		}
+						 
+		input[type=email], select, textarea {
+		  width: 100%;
+		  padding: 12px;
+		  border: 1px solid #ccc;
+		  margin-top: 6px;
+		  margin-bottom: 16px;
+		  resize: vertical;
+		}
+
+		input[type=submit] {
+		  background-color: #3A6541;
+		  color: white;
+		  padding: 12px 20px;
+		  border: none;
+		  cursor: pointer;
+		}
+
+		input[type=submit]:hover {
+		  background-color: #45a049;
+		}
+						 
+		.aviso {
+			color: grey;
+			margin-top: -28px;
+		}
+						 
+		</style>
+<?php }
+};
+
+function quitar_intervalo( $price, $product ) {
+     if (is_product()) {
+    return $product->get_price();
+	} else {
+	// Precio normal
+    $prices = array( $product->get_variation_price( 'min', true ), $product->get_variation_price( 'max', true ) );
+    $price = $prices[0] !== $prices[1] ? sprintf( __( 'Desde: %1$s', 'woocommerce' ), wc_price( $prices[0] ) ) : wc_price( $prices[0] );
+ 
+    // Precio rebajado
+    $prices = array( $product->get_variation_regular_price( 'min', true ), $product->get_variation_regular_price( 'max', true ) );
+    sort( $prices );
+    $saleprice = $prices[0] !== $prices[1] ? sprintf( __( 'Desde: %1$s', 'woocommerce' ), wc_price( $prices[0] ) ) : wc_price( $prices[0] );
+ 
+    if ( $price !== $saleprice ) 
+	{
+        $price = '<del>' . $saleprice . '</del> <ins>' . $price . '</ins>';
+    }     
+    return $price;
+	}
+}
+add_filter( 'woocommerce_variable_sale_price_html', 'quitar_intervalo', 10, 2 );
+add_filter( 'woocommerce_variable_price_html', 'quitar_intervalo', 10, 2 );
+
+add_action('wp_head', 'css_home');
+function css_home(){
+	if(is_front_page()) {  ?>
+		<style>
+		.home_ocutar {
+			display: none
+		}
+		
+		.home_title_ocultar {
+			display: none
+		}
+		
+		.main-header-bar {
+			background: #3A6541;
+			box-shadow: 0px 3px 3px #b8b8b8;
+		}
+		</style>
+<?php }
+};
 ?>
