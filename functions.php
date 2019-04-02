@@ -429,4 +429,42 @@ function quitar_intervalo( $price, $product ) {
 }
 add_filter( 'woocommerce_variable_sale_price_html', 'quitar_intervalo', 10, 2 );
 add_filter( 'woocommerce_variable_price_html', 'quitar_intervalo', 10, 2 );
+
+add_action('wp_head', 'css_home');
+function css_home(){
+	if(is_front_page()) {  ?>
+		<style>
+		.home_ocultar {
+			display: none
+		}
+		
+		.home_title_ocultar {
+			display: none
+		}
+		
+		.main-header-bar {
+			background: #3A6541;
+			box-shadow: 0px 3px 3px #b8b8b8;
+		}
+		</style>
+<?php }
+};
+
+add_action('wp_head', 'css_veracruz');
+function css_veracruz(){
+	  ?>
+	<style>
+	.main-header-bar {
+		background: #3A6541;
+		box-shadow: 0px 2px 2px #b8b8b8;
+	}
+	</style>
+<?php
+};
+
+function echo_schema_product(){
+global $product;
+	echo $product->get_name();
+}
+add_shortcode( 'sc_schema_product', 'schema_product' );
 ?>
