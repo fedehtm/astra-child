@@ -461,4 +461,10 @@ function css_veracruz(){
 	</style>
 <?php
 };
+
+function echo_schema_product(){
+global $product;
+	echo $product->get_name();
+}
+add_shortcode( 'sc_schema_product', 'schema_product' );
 ?>
