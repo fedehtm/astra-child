@@ -428,6 +428,17 @@ function quitar_intervalo( $price, $product ) {
 add_filter( 'woocommerce_variable_sale_price_html', 'quitar_intervalo', 10, 2 );
 add_filter( 'woocommerce_variable_price_html', 'quitar_intervalo', 10, 2 );
 
+add_action( 'woocommerce_before_single_product', 'check_if_variable_first' );
+function check_if_variable_first(){
+    if ( is_product() ) {
+        global $post;
+        $product = wc_get_product( $post->ID );
+        if ( $product->is_type( 'variable' ) ) {
+remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 10 );
+		}
+	}
+}
+		
 add_action('wp_head', 'css_home');
 function css_home(){
 	if(is_front_page()) {  ?>
