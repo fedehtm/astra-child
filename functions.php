@@ -449,11 +449,6 @@ function css_home(){
 		.home_title_ocultar {
 			display: none
 		}
-		
-		.main-header-bar {
-			background: #3A6541;
-			box-shadow: 0px 3px 3px #b8b8b8;
-		}
 		</style>
 <?php }
 };
@@ -465,6 +460,14 @@ function css_veracruz(){
 	.main-header-bar {
 		background: #3A6541;
 		box-shadow: 0px 2px 2px #b8b8b8;
+	}
+		
+	.main-header-menu a {
+    		color: white;
+	}
+		
+	.main-header-menu a {
+    		background-color: #3A6541;
 	}
 	</style>
 <?php
