@@ -434,7 +434,7 @@ add_action('wp_head', 'css_home');
 function css_home(){
 	if(is_front_page()) {  ?>
 		<style>
-		.home_ocutar {
+		.home_ocultar {
 			display: none
 		}
 		
@@ -467,4 +467,7 @@ global $product;
 	echo $product->get_name();
 }
 add_shortcode( 'sc_schema_product', 'schema_product' );
+
+remove_action( 'woocommerce_before_shop_loop', 'woocommerce_catalog_ordering', 30 );
+remove_action( 'woocommerce_before_shop_loop', 'woocommerce_result_count', 20 );
 ?>
