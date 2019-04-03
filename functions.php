@@ -415,29 +415,29 @@ if(is_page('contacto')) {  ?>
 <?php }
 };
 
-function quitar_intervalo( $price, $product ) {
-     if (is_product()) {
-    return $product->get_price();
-	} else {
-	// Precio normal
-    $prices = array( $product->get_variation_price( 'min', true ), $product->get_variation_price( 'max', true ) );
-    $price = $prices[0] !== $prices[1] ? sprintf( __( 'Desde: %1$s', 'woocommerce' ), wc_price( $prices[0] ) ) : wc_price( $prices[0] );
- 
-    // Precio rebajado
-    $prices = array( $product->get_variation_regular_price( 'min', true ), $product->get_variation_regular_price( 'max', true ) );
-    sort( $prices );
-    $saleprice = $prices[0] !== $prices[1] ? sprintf( __( 'Desde: %1$s', 'woocommerce' ), wc_price( $prices[0] ) ) : wc_price( $prices[0] );
- 
-    if ( $price !== $saleprice ) 
-	{
-        $price = '<del>' . $saleprice . '</del> <ins>' . $price . '</ins>';
-    }     
+add_filter( 'woocommerce_variable_price_html', 'custom_min_max_variable_price_html', 10, 2 );
+function custom_min_max_variable_price_html( $price, $product ) {
+    $prices = $product->get_variation_prices( true );
+    $min_price = current( $prices['price'] );
+    $max_price = end( $prices['price'] );
+
+    $min_price_html = wc_price( $min_price ) . $product->get_price_suffix();
+    $price = sprintf( __( 'Desde %1$s', 'woocommerce' ), $min_price_html );
+
     return $price;
+}
+
+add_action( 'woocommerce_before_single_product', 'check_if_variable_first' );
+function check_if_variable_first(){
+    if ( is_product() ) {
+        global $post;
+        $product = wc_get_product( $post->ID );
+        if ( $product->is_type( 'variable' ) ) {
+remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 10 );
+		}
 	}
 }
-add_filter( 'woocommerce_variable_sale_price_html', 'quitar_intervalo', 10, 2 );
-add_filter( 'woocommerce_variable_price_html', 'quitar_intervalo', 10, 2 );
-
+		
 add_action('wp_head', 'css_home');
 function css_home(){
 	if(is_front_page()) {  ?>
