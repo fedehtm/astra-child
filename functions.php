@@ -464,12 +464,4 @@ if(is_page('carrito')) {  ?>
 <?php }
 };
 
-add_filter( 'gettext', 'translate_woocommerce_strings', 999, 3 );
-function translate_woocommerce_strings( $translated, $text, $domain ) {
-	if(is_page('carrito')) {
-		$translated = str_ireplace( 'Total del carrito!', 'Elegir metodo de pago', $translated );
-		$translated = str_ireplace( 'Finalizar compra', 'Pagar', $translated );	
-		return $translated;
-	}
-}
 ?>
