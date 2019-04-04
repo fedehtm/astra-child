@@ -481,15 +481,4 @@ add_shortcode( 'sc_schema_product', 'schema_product' );
 
 remove_action( 'woocommerce_before_shop_loop', 'woocommerce_catalog_ordering', 30 );
 remove_action( 'woocommerce_before_shop_loop', 'woocommerce_result_count', 20 );
-
-add_action('wp_head', 'css_veracruz');
-function css_veracruz(){
-	  ?>
-	<style>
-	.shop_table shop_table_responsive {
-		display: none;
-	}
-	</style>
-<?php
-};
 ?>
