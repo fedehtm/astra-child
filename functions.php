@@ -444,4 +444,23 @@ add_shortcode( 'sc_schema_product', 'schema_product' );
 
 remove_action( 'woocommerce_before_shop_loop', 'woocommerce_catalog_ordering', 30 );
 remove_action( 'woocommerce_before_shop_loop', 'woocommerce_result_count', 20 );
+
+add_action('wp_head', 'css_carrito');
+function css_carrito(){
+if(is_page('carrito')) {  ?>
+	<style>
+	.shop_table.shop_table_responsive {
+		display: none;
+	}
+	
+	h2 {
+		display: none;
+	}
+		
+	.wc-proceed-to-checkout {
+		padding: 1em 0 0 0;
+	}
+	</style>
+<?php }
+};
 ?>
