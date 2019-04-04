@@ -139,45 +139,53 @@ if (is_singular('post')) {  ?>
 
 add_action('wp_head', 'schema_product');
 function schema_product(){
-global $product;
-if (is_singular('product')) {  ?>
-	<script type="application/ld+json">
-	{
-	  "@context": "http://schema.org",
-	  "@type": "Product",
-	  "name": "<?php echo $product->get_name(); ?>",
-	  "description": "<?php echo strip_tags($product->get_description()); ?>",
-	  "image": "<?php echo get_the_post_thumbnail_url( $product->get_id(), 'full' ); ?>",
-	  "url": "<?php echo get_permalink( $product->get_id() ); ?>",
-	  "sku": "<?php echo $product->get_sku(); ?>",
-	  "brand": "<?php echo get_post_meta(get_the_ID(), 'brand', TRUE); ?>",
-	  "offers": {
-		"@type": "Offer",
-		"availability": "http://schema.org/<?php echo $product->is_in_stock() ? 'InStock' : 'OutOfStock'; ?>",
-		"price": "<?php echo $product->get_price(); ?>",
-		"priceValidUntil": "2019-31-12",	// "<?php echo date("Y-m-d"); ?>", //en php usar comillas "", en html apostrofe ''
-		"priceCurrency": "<?php echo get_woocommerce_currency(); ?>",
-		"url": "<?php echo get_permalink( $product->get_id() ); ?>"
-		},
-	  "aggregateRating": {
-		"@type": "AggregateRating",
-		"bestRating": "5",
-		"ratingValue": "5",
-		"reviewCount": "3"			//"<?php echo rand(5, 15); ?>"
-	  	},
-	  "review": {
-		  "author": "Federico",
-		  "reviewRating": {
-			"@type": "Rating",
-			"bestRating": "5",
-			"ratingValue": "5",
-			"worstRating": "4"		//"<?php echo rand(3, 5); ?>"
-		  }
-		}
-	}
-	</script>
-<?php  }
-};
+    global $product;
+
+    if ( is_product() && ! is_a($product, 'WC_Product') ) {
+        $product = wc_get_product( get_the_id() );
+    }
+
+    if ( is_product() && is_a($product, 'WC_Product') ) :
+
+    ?>
+    <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "Product",
+      "name": "<?php echo $product->get_name(); ?>",
+      "description": "Ver descripción en el link incluido.",
+      "image": "<?php echo get_the_post_thumbnail_url( $product->get_id(), 'full' ); ?>",
+      "url": "<?php echo get_permalink( $product->get_id() ); ?>",
+      "sku": "<?php echo $product->get_sku(); ?>",
+      "brand": "<?php echo $product->get_meta('brand'); ?>",
+      "offers": {
+        "@type": "Offer",
+        "availability": "http://schema.org/<?php echo $product->is_in_stock() ? 'InStock' : 'OutOfStock'; ?>",
+        "price": "<?php echo $product->get_price(); ?>",
+        "priceValidUntil": "2019-12-31",
+        "priceCurrency": "<?php echo get_woocommerce_currency(); ?>",
+        "url": "<?php echo $product->get_permalink(); ?>"
+        },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "bestRating": "5",
+        "ratingValue": "5",
+        "reviewCount": "3"
+        },
+      "review": {
+          "author": "Federico",
+          "reviewRating": {
+            "@type": "Rating",
+            "bestRating": "5",
+            "ratingValue": "5",
+            "worstRating": "4"
+          }
+        }
+    }
+    </script>
+    <?php
+    endif;
+}
 
 add_filter( 'get_product_search_form' , 'me_custom_product_searchform' );
 function me_custom_product_searchform() {
@@ -407,26 +415,70 @@ if(is_page('contacto')) {  ?>
 <?php }
 };
 
-function quitar_intervalo( $price, $product ) {
-     if (is_product()) {
-    return $product->get_price();
-	} else {
-	// Precio normal
-    $prices = array( $product->get_variation_price( 'min', true ), $product->get_variation_price( 'max', true ) );
-    $price = $prices[0] !== $prices[1] ? sprintf( __( 'Desde: %1$s', 'woocommerce' ), wc_price( $prices[0] ) ) : wc_price( $prices[0] );
- 
-    // Precio rebajado
-    $prices = array( $product->get_variation_regular_price( 'min', true ), $product->get_variation_regular_price( 'max', true ) );
-    sort( $prices );
-    $saleprice = $prices[0] !== $prices[1] ? sprintf( __( 'Desde: %1$s', 'woocommerce' ), wc_price( $prices[0] ) ) : wc_price( $prices[0] );
- 
-    if ( $price !== $saleprice ) 
-	{
-        $price = '<del>' . $saleprice . '</del> <ins>' . $price . '</ins>';
-    }     
+add_filter( 'woocommerce_variable_price_html', 'custom_min_max_variable_price_html', 10, 2 );
+function custom_min_max_variable_price_html( $price, $product ) {
+    $prices = $product->get_variation_prices( true );
+    $min_price = current( $prices['price'] );
+    $max_price = end( $prices['price'] );
+
+    $min_price_html = wc_price( $min_price ) . $product->get_price_suffix();
+    $price = sprintf( __( 'Desde %1$s', 'woocommerce' ), $min_price_html );
+
     return $price;
+}
+
+add_action( 'woocommerce_before_single_product', 'check_if_variable_first' );
+function check_if_variable_first(){
+    if ( is_product() ) {
+        global $post;
+        $product = wc_get_product( $post->ID );
+        if ( $product->is_type( 'variable' ) ) {
+remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 10 );
+		}
 	}
 }
-add_filter( 'woocommerce_variable_sale_price_html', 'quitar_intervalo', 10, 2 );
-add_filter( 'woocommerce_variable_price_html', 'quitar_intervalo', 10, 2 );
+		
+add_action('wp_head', 'css_home');
+function css_home(){
+	if(is_front_page()) {  ?>
+		<style>
+		.home_ocultar {
+			display: none
+		}
+		
+		.home_title_ocultar {
+			display: none
+		}
+		</style>
+<?php }
+};
+
+add_action('wp_head', 'css_veracruz');
+function css_veracruz(){
+	  ?>
+	<style>
+	.main-header-bar {
+		background: #3A6541;
+		box-shadow: 0px 2px 2px #b8b8b8;
+	}
+		
+	.main-header-menu a {
+    		color: white;
+	}
+		
+	.main-header-menu a {
+    		background-color: #3A6541;
+	}
+	</style>
+<?php
+};
+
+function echo_schema_product(){
+global $product;
+	echo $product->get_name();
+}
+add_shortcode( 'sc_schema_product', 'schema_product' );
+
+remove_action( 'woocommerce_before_shop_loop', 'woocommerce_catalog_ordering', 30 );
+remove_action( 'woocommerce_before_shop_loop', 'woocommerce_result_count', 20 );
 ?>
