@@ -452,6 +452,10 @@ if(is_page('carrito')) {  ?>
 	h2 {
 		display: none;
 	}
+	
+	.shop_table {
+		display: none;
+	}
 		
 	.wc-proceed-to-checkout {
 		padding: 1em 0 0 0;
