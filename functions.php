@@ -469,4 +469,15 @@ function translate_woocommerce_strings( $translated1, $translated2, $text, $doma
 		return $translated2;
 	}
 }
+
+add_action('wp_head', 'css_finalizar_compra');
+function css_finalizar_compra(){
+if(is_page('finalizar-compra')) {  ?>
+	<style>
+		img[src="https://www.veracruzinsumos.com.ar/wp-content/plugins/woocommerce-mercadopago/assets/images/mercadopago.png"] {
+			display: none;
+		}
+	</style>
+<?php }
+};
 ?>
