@@ -459,25 +459,4 @@ if(is_page('carrito')) {  ?>
 	</style>
 <?php }
 };
-
-add_filter( 'gettext', 'translate_woocommerce_strings', 999, 3 );
-function translate_woocommerce_strings( $translated1, $translated2, $text, $domain ) {
-	if(is_page('carrito')) {
-		$translated1 = str_ireplace( 'Total del carrito!', 'Elegir metodo de pago', $translated );
-		$translated2 = str_ireplace( 'Finalizar compra', 'Pagar', $translated );	
-		return $translated1;
-		return $translated2;
-	}
-}
-
-add_action('wp_head', 'css_finalizar_compra');
-function css_finalizar_compra(){
-if(is_page('finalizar-compra')) {  ?>
-	<style>
-		img[src="https://www.veracruzinsumos.com.ar/wp-content/plugins/woocommerce-mercadopago/assets/images/mercadopago.png"] {
-			display: none;
-		}
-	</style>
-<?php }
-};
 ?>
