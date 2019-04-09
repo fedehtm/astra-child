@@ -495,4 +495,31 @@ if (is_singular('post')) {  ?>
 <?php }
 };
 
+add_filter( 'tablepress_use_default_css', 'vc_tablepress_css_conditional_load' );
+add_filter( 'tablepress_custom_css_url', 'vc_tablepress_css_conditional_load' );
+function vc_tablepress_css_conditional_load( $load ) {
+	if ( ! is_page( 
+				array(
+				'lista-de-precios',
+				'lista-microcerveceros',
+				) 
+			) 
+		) 
+		{
+		$load = false;
+		}
+	return $load;
+}
+
+add_action( 'wp_print_styles', 'tablepress_deregister_styles', 100 );
+function tablepress_deregister_styles() {
+    	if ( ! is_page( 
+				array(
+				'lista-de-precios',
+				'lista-microcerveceros',
+				) 
+			) 
+		) {
+    }
+}
 ?>
