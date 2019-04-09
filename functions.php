@@ -469,6 +469,7 @@ add_action( 'wp_head', 'vc_enqueue_facebook_sdk' );
 function fb_comments_code() {
 if (is_singular('post')) {
 	?>
+	<div class="fb-like" data-href="<?php the_permalink(); ?> " data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
 	<div class="fb-comments" data-href="<?php the_permalink(); ?> " data-width="100%"></div>
 	<?php
    }
