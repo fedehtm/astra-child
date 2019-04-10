@@ -587,7 +587,6 @@ function og_blog_metatags() {
 			}
 
 	?>
-
 	<meta property="og:url" content="<?php the_permalink(); ?>"/>  
 	<meta property="og:title" content="<?php single_post_title(''); ?>" />  
 	<meta property="og:description" content="<?php echo $og_des; ?>" />   
@@ -597,12 +596,36 @@ function og_blog_metatags() {
 	<?php endif; ?>
 	<meta property="og:site_name" content="<?php bloginfo(); ?>" />
 	<meta property="og:locale" content="es_AR" />
-	<meta property="fb:app_id" content="2429886243720598" />
-			
+	<meta property="fb:app_id" content="2429886243720598" />			
 	<?php
 		} else {
 			return;
 	}
 }
 add_action('wp_head', 'og_blog_metatags', 4);
+
+function og_product_metatags(){
+    global $product;
+
+    if ( is_product() && ! is_a($product, 'WC_Product') ) {
+        $product = wc_get_product( get_the_id() );
+    }
+
+    if ( is_product() && is_a($product, 'WC_Product') ) {
+
+	?>
+	<meta property="og:url" content="<?php echo get_permalink( $product->get_id() ); ?>"/>  
+	<meta property="og:title" content="<?php echo $product->get_name(); ?>" />  
+	<meta property="og:description" content="Ver descripción en el link incluido." />   
+	<meta property="og:type" content="website" />
+	<meta property="og:image" content="<?php echo get_the_post_thumbnail_url( $product->get_id(), 'full' ); ?>" />
+	<meta property="og:site_name" content="<?php bloginfo(); ?>" />
+	<meta property="og:locale" content="es_AR" />
+	<meta property="fb:app_id" content="2429886243720598" />			
+	<?php
+		} else {
+			return;
+	}
+}
+add_action('wp_head', 'og_product_metatags', 4);
 ?>
