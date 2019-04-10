@@ -595,7 +595,7 @@ function og_blog_metatags() {
 	<meta property="og:image" content="<?php $featured_img = wp_get_attachment_image_src(get_post_thumbnail_id( $post->ID ), 'full', false); echo $featured_img[0]; ?>" />
 	<?php endif; ?>
 	<meta property="og:site_name" content="<?php bloginfo(); ?>" />
-	<meta property="og:locale" content="es_AR" />
+	<meta property="og:locale" content="es_ES" />
 	<meta property="fb:app_id" content="2429886243720598" />			
 	<?php
 		} else {
@@ -620,7 +620,7 @@ function og_product_metatags(){
 	<meta property="og:type" content="website" />
 	<meta property="og:image" content="<?php echo get_the_post_thumbnail_url( $product->get_id(), 'full' ); ?>" />
 	<meta property="og:site_name" content="<?php bloginfo(); ?>" />
-	<meta property="og:locale" content="es_AR" />
+	<meta property="og:locale" content="es_ES" />
 	<meta property="fb:app_id" content="2429886243720598" />			
 	<?php
 		} else {
@@ -628,4 +628,23 @@ function og_product_metatags(){
 	}
 }
 add_action('wp_head', 'og_product_metatags', 4);
+
+function og_pages_metatags(){
+    if (is_page()) {
+		
+	?>
+	<meta property="og:url" content="<?php echo get_permalink(); ?>"/>  
+	<meta property="og:title" content="<?php echo get_the_title(); ?>" />  
+	<meta property="og:description" content="<?php echo get_post_meta( get_the_ID(), 'description', true ); ?>" />   
+	<meta property="og:type" content="website" />
+	<meta property="og:image" content="https://www.veracruzinsumos.com.ar/wp-content/uploads/LOGO-JPEG-15-optimizado.jpg" />
+	<meta property="og:site_name" content="<?php bloginfo(); ?>" />
+	<meta property="og:locale" content="es_ES" />
+	<meta property="fb:app_id" content="2429886243720598" />			
+	<?php
+		} else {
+			return;
+	}
+}
+add_action('wp_head', 'og_pages_metatags', 4);
 ?>
