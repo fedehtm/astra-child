@@ -573,7 +573,6 @@ function og_blog_metatags() {
 	global $post;
 
 	if (is_singular('post')) {
-	$fallbackimage = "https://www.veracruzinsumos.com.ar/wp-content/uploads/LOGO-PNG-150-DPI-03.png";
 			
 	if(get_post_meta( get_the_ID(), 'description', true )) { 
 		$og_des = get_post_meta( get_the_ID(), 'description', true ); 
@@ -589,9 +588,9 @@ function og_blog_metatags() {
 
 	?>
 
-	<meta property="og:url" content="<?php if(is_home() || is_front_page()){echo home_url();}else{the_permalink();} ?>"/>  
-	<meta property="og:title" content="<?php if(is_home() || is_front_page()){bloginfo();}else{single_post_title('');} ?>" />  
-	<meta property="og:description" content="<?php if(is_home() || is_front_page()){bloginfo(description);}else{echo $og_des;} ?>" />   
+	<meta property="og:url" content="<?php the_permalink(); ?>"/>  
+	<meta property="og:title" content="<?php single_post_title(''); ?>" />  
+	<meta property="og:description" content="<?php echo $og_des; ?>" />   
 	<meta property="og:type" content="article" />
 	<?php if( is_single() && has_post_thumbnail($post->ID) ) :?>
 	<meta property="og:image" content="<?php $featured_img = wp_get_attachment_image_src(get_post_thumbnail_id( $post->ID ), 'full', false); echo $featured_img[0]; ?>" />
