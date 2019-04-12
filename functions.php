@@ -469,7 +469,7 @@ add_action( 'wp_head', 'vc_enqueue_facebook_sdk' );
 function fb_comments_code() {
 if (is_singular('post')) {
 	?>
-	<div class="fb-like" data-href="<?php the_permalink(); ?> " data-layout="button" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+	<div class="fb-like" data-href="<?php the_permalink(); ?> " data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
 	<div class="fb-comments" data-href="<?php the_permalink(); ?> " data-width="100%"></div>
 	<?php
    }
@@ -588,7 +588,7 @@ function og_blog_metatags() {
 
 	?>
 	<meta property="og:url" content="<?php the_permalink(); ?>"/>  
-	<meta property="og:title" content="<?php single_post_title() . echo(' | ' . bloginfo()); ?>" />  
+	<meta property="og:title" content="<?php single_post_title(''); ?>" />  
 	<meta property="og:description" content="<?php echo $og_des; ?>" />   
 	<meta property="og:type" content="article" />
 	<?php if( is_single() && has_post_thumbnail($post->ID) ) :?>
@@ -615,7 +615,7 @@ function og_product_metatags(){
 
 	?>
 	<meta property="og:url" content="<?php echo get_permalink( $product->get_id() ); ?>"/>  
-	<meta property="og:title" content="<?php echo ($product->get_name() . ' | ' . bloginfo()); ?>" />  
+	<meta property="og:title" content="<?php echo $product->get_name(); ?>" />  
 	<meta property="og:description" content="Ver descripción en el link incluido." />   
 	<meta property="og:type" content="website" />
 	<meta property="og:image" content="<?php echo get_the_post_thumbnail_url( $product->get_id(), 'full' ); ?>" />
@@ -634,7 +634,7 @@ function og_pages_metatags(){
 		
 	?>
 	<meta property="og:url" content="<?php echo get_permalink(); ?>"/>  
-	<meta property="og:title" content="<?php echo (get_the_title() . ' | ' . bloginfo()); ?>" />  
+	<meta property="og:title" content="<?php echo get_the_title(); ?>" />  
 	<meta property="og:description" content="<?php echo get_post_meta( get_the_ID(), 'description', true ); ?>" />   
 	<meta property="og:type" content="website" />
 	<meta property="og:image" content="https://www.veracruzinsumos.com.ar/wp-content/uploads/LOGO-JPEG-15-optimizado.jpg" />
