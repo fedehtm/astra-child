@@ -480,15 +480,11 @@ add_action('wp_head', 'css_blog_post');
 function css_blog_post(){
 if (is_singular('post')) {  ?>
 	<style>
-		.logged-in-as {
+		.logged-in-as, .form-submit, .comment-notes, .ast-comment-formwrap {
 			display: none;
 		}
 		
 		#comment {
-			display: none;
-		}
-		
-		.form-submit {
 			display: none;
 		}
 	</style>
