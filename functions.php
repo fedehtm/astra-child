@@ -643,4 +643,11 @@ function og_pages_metatags(){
 	}
 }
 add_action('wp_head', 'og_pages_metatags', 4);
+
+function my_custom_login_logo() {
+    echo '<style type="text/css">
+        h1 a { background-image:url(https://www.veracruzinsumos.com.ar/wp-content/uploads/Icono-PNG-96-DPI-512x512-px-1.png) !important; }
+    </style>';
+}
+add_action('login_head', 'my_custom_login_logo');
 ?>
