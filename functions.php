@@ -652,7 +652,9 @@ function my_custom_login_logo() {
 add_action('login_head', 'my_custom_login_logo');
 
 function keywords_meta_fx(){
+?>
 <meta name="keywords" content="insumos cerveceros,cerveza artesanal,kit para hacer cerveza,cerveza casera,kit cerveza artesanal,como hacer cerveza artesanal,como hacer cerveza casera,como hacer cerveza,kit cerveza,insumos cerveza artesanal">
+<?php
 }
 add_action('wp_head', 'keywords_meta_fx', 2);
 ?>
